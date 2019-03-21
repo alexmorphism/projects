@@ -1,0 +1,50 @@
+/*flux.css
+ * 
+CSS class for adding color to the GUI
+The purpose of this class is add color to the buttons and background.
+Background color and buttons are individually changed with different color and bit of roundness. 
+Buttons changes color as you hover over. Buttons shrink a bit when you click on it.
+    Author: Alexandre Castro
+    * CS 208 Data Structures
+    * Assignment2 
+    * 10/17/18
+*/
+.root{
+    -fx-background-color: #ba55d3;
+}
+
+.label{
+    -fx-text-fill:#000000
+        
+}
+
+.button:hover{
+    -fx-background-color: rgb(211,244,210);
+    -fx-scale-y: 1;
+}
+
+.button-green{
+	-fx-background-color: rgb(14,161,11);
+	-fx-text-fill: #000000;
+	-fx-background-radius: 3;
+    -fx-font-size: 110%;
+}
+
+.button-yellow{
+	-fx-background-color: rgb(255,255,0);
+	-fx-text-fill: #000000;
+	-fx-background-radius: 3;
+    -fx-font-size: 110%;
+}
+
+.button-red{
+	-fx-background-color: rgb(245,65,19);
+	-fx-text-fill: #000000;
+	-fx-background-radius: 3;
+    -fx-font-size: 110%;
+}
+
+.button:pressed{
+    -fx-scale-y: 0.9;
+    -fx-scale-x: 0.9;
+}
