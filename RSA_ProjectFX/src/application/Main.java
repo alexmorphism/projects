@@ -21,6 +21,7 @@ import javafx.scene.text.*;
 // creates a class
 public class Main extends Application {
 	private String message = "";
+	private Alphabet alpha = new Alphabet();
 	@Override
 	public void start(Stage primaryStage) { 		// overrides the start method
 		Stage window = primaryStage;
@@ -39,8 +40,19 @@ public class Main extends Application {
 		
 		//encrypt button action
 		encrypt.setOnAction(e-> {
-			tArea.appendText("\n\nEncrypting message...\n");
+			
 			message = tArea.getText();
+			
+			
+			try{
+				alpha.writeFile(message);
+				alpha.readLines("message.txt");
+				tArea.appendText("\n\nEncrypting message...\n");
+			} catch(Exception ex){
+				System.out.println(ex);
+			}
+			
+			
 			System.out.println(message);
 		});
 		
