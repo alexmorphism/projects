@@ -30,7 +30,7 @@ public class Letter {
 	}
 	
 	public String toString(){
-		return c + " = " + num;
+		return"" + "(" +c + "," + num +")";
 	}
 	
 }

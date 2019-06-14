@@ -25,7 +25,7 @@ public class Alphabet {
 		//encrypt = new Encryption();
 	}
 	
-	//initializes the alphabet  {(A,100), (B, 101), ..., (Y,124), (Z,125)}
+	//initializes the alphabet  {(A,100), (B,101), ..., (Y,124), (Z,125)}
 	private void initializeAlpha(){
 		char c = 'A';
 		int num = 100;
@@ -35,6 +35,10 @@ public class Alphabet {
 			c++;
 			num++;
 		}
+		alphaList.add(new Letter(' ', num++));
+		alphaList.add(new Letter('?', num++));
+		alphaList.add(new Letter('!', num++));
+		
 	}
 	
 	
@@ -78,9 +82,12 @@ public class Alphabet {
 	
 	// print alphabet to the console
 	public void printAlphabet(){
+		System.out.print("{");
 		for(Letter i: alphaList){
-			System.out.println(i);
+			System.out.print(i);
+			System.out.print(",");
 		}
+		System.out.println("}");
 	}
 	
 	
