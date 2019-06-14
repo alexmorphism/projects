@@ -17,10 +17,12 @@ public class Alphabet {
 	private ArrayList<Letter> alphaList;
 	
 	
+	
 	// no argument constructor constructs a new alphabet
 	public Alphabet(){
 		this.alphaList = new ArrayList<Letter>();
 		initializeAlpha();
+		//encrypt = new Encryption();
 	}
 	
 	//initializes the alphabet  {(A,100), (B, 101), ..., (Y,124), (Z,125)}
@@ -51,6 +53,7 @@ public class Alphabet {
 		}
 		
 		bf.close(); // close buffered reader
+		//encrypt = new Encryption(records);
 		
 		return records;
 		

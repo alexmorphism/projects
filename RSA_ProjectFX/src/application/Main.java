@@ -7,6 +7,9 @@
 
 package application;
 	
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
 
 import javafx.stage.Stage;
@@ -22,6 +25,7 @@ import javafx.scene.text.*;
 public class Main extends Application {
 	private String message = "";
 	private Alphabet alpha = new Alphabet();
+	
 	@Override
 	public void start(Stage primaryStage) { 		// overrides the start method
 		Stage window = primaryStage;
@@ -40,20 +44,18 @@ public class Main extends Application {
 		
 		//encrypt button action
 		encrypt.setOnAction(e-> {
-			
 			message = tArea.getText();
-			
-			
+			List<String> processedText = new ArrayList<String>();
 			try{
 				alpha.writeFile(message);
-				alpha.readLines("message.txt");
+				processedText = alpha.readLines("message.txt");
 				tArea.appendText("\n\nEncrypting message...\n");
 			} catch(Exception ex){
 				System.out.println(ex);
 			}
 			
-			
-			System.out.println(message);
+			for(String s: processedText)
+				System.out.println(s);
 		});
 		
 		//decrypt button action
