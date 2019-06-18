@@ -16,13 +16,9 @@ public class Tester {
 
 	public static void main(String[] args) throws Exception {
 		Alphabet alpha = new Alphabet();
+		KeyGenerator keyGen = new KeyGenerator();
 		
 		String message = "file1";
-		
-		BigInteger p = new BigInteger(100, 2, new Random());
-		BigInteger q = new BigInteger(100, 2, new Random());
-		
-		BigInteger n = p.multiply(q);
 		
 		/*
 		try{
@@ -35,9 +31,8 @@ public class Tester {
 		
 		//alpha.printAlphabet();
 		 */
-		System.out.println("p = " + p);
-		System.out.println("q = " + q);
-		System.out.println("n = " + n.toString());
+
+		System.out.println(keyGen.toString());
 
 	}
 

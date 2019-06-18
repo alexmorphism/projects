@@ -12,38 +12,37 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 public class Alphabet {
-	private ArrayList<Letter> alphaList;
+	private HashMap<Character, Integer> alphaMap;
 	
 	
 	
 	// no argument constructor constructs a new alphabet
 	public Alphabet(){
-		this.alphaList = new ArrayList<Letter>();
+		alphaMap = new HashMap<Character, Integer>();
 		initializeAlpha();
-		//encrypt = new Encryption();
 	}
 	
 	//initializes the alphabet  {(A,100), (B,101), ..., (Y,124), (Z,125)}
 	private void initializeAlpha(){
-		char c = 'A';
+		char c = 'a';
 		int num = 100;
-		
-		for(int i = 0; i < 26; i++){
-			alphaList.add(new Letter(c , num));
+		for(int i = 0; i < 52; i++){
+			alphaMap.put(c, num);
 			c++;
+			if(i == 25)
+				c = 'A';
 			num++;
 		}
-		alphaList.add(new Letter(' ', num++));
-		alphaList.add(new Letter('?', num++));
-		alphaList.add(new Letter('!', num++));
-		
+		alphaMap.put(' ', num++);
+		alphaMap.put('?', num++);
+		alphaMap.put('!', num++);
 	}
 	
 	
 	//*******methods for reading files******//
-	
 	public List<String> readLines(String filename)
 	throws Exception
 	{
@@ -59,22 +58,14 @@ public class Alphabet {
 		bf.close(); // close buffered reader
 		//encrypt = new Encryption(records);
 		
-		return records;
-		
+		return records;	
 	}
 	
 	
 	public void writeFile(String message)
 	throws Exception
 	{
-		//String line = null;
-		//BufferedReader bf = new BufferedReader(new FileReader(message));
 		PrintWriter    pw = new PrintWriter("message.txt");
-		
-//		while((line = bf.readLine()) != null){
-//			pw.println(line);
-//		}
-		
 		pw.print(message);
 		pw.close();
 	}
@@ -83,12 +74,11 @@ public class Alphabet {
 	// print alphabet to the console
 	public void printAlphabet(){
 		System.out.print("{");
-		for(Letter i: alphaList){
-			System.out.print(i);
+		for(Character i: alphaMap.keySet()){
+			System.out.print("(" + i);
+			System.out.print("," + alphaMap.get(i) + ")");
 			System.out.print(",");
 		}
 		System.out.println("}");
 	}
-	
-	
 }
