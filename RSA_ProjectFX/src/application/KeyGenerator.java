@@ -10,33 +10,77 @@ public class KeyGenerator {
 	private BigInteger n;
 	private BigInteger d;
 	private final BigInteger E = new BigInteger("65537");
+	private FileIO reader;
 	
 	
-	public KeyGenerator(){
-		p = new BigInteger(256, 2, new Random());
-		q = new BigInteger(256, 2, new Random());
+	public KeyGenerator(int bits, int prob){
+		reader = new FileIO();
+		p = new BigInteger(bits, prob, new Random());
+		q = new BigInteger(bits, prob, new Random());
+		if(!isPrime(p))
+			p = p.nextProbablePrime(); //returns the next Big Integer that is probably prime
+		if(!isPrime(q))
+			q = q.nextProbablePrime(); //returns the next Big Integer that is probably prime
 		n = p.multiply(q);
-		d = E.modInverse(p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE)));
+		d = E.modInverse(p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE))); // d = e^-1 mod (p-1)(q-1)
+		createPublicPair();
+		createPrivatePair();
 	}
 	
 	
-	public String getP(){
-		return p.toString();
+	public BigInteger getP(){
+		return p;
 	}
 	
-	public String getQ(){
-		return q.toString();
+	public BigInteger getQ(){
+		return q;
 	}
 	
-	public String getN(){
-		return n.toString();
+	public BigInteger getN(){
+		return n;
 	}
 	
-	public String getD(){
-		return d.toString();
+	public BigInteger getD(){
+		return d;
 	}
 	
+	//creates a public key and writes to a file
+	private void createPublicPair(){
+		String puPair = orderedPair(n, E);
+		try{
+			reader.writeToFile("public_key.txt", puPair);
+		} catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
+		
+	}
 	
+	//creates a private key and writes to a file.
+	private void createPrivatePair(){
+		String prPair = orderedPair(n, d);
+		try{
+			reader.writeToFile("private_key.txt", prPair);
+		} catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	//creates an ordered pair (x,y) such that x,y is a BigInteger
+	private String orderedPair(BigInteger x, BigInteger y){
+		String pair = x.toString() + " " + y.toString();
+		return pair;
+	}
+	
+	//check if current BigInteger is prime, if not generate the next prime BigInteger
+	public boolean isPrime(BigInteger b){
+		if(b.isProbablePrime(1024))
+			return true;
+		
+		return false;
+	}
+	
+	//returns a formatted string
+	@Override 
 	public String toString(){
 		return "p = " + p.toString() + "\nq = " + q.toString() + "\nn = " + n.toString() + 
 				"\ne = " + E.toString() + "\nd = " + d.toString();

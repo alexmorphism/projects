@@ -16,9 +16,8 @@ public class Tester {
 
 	public static void main(String[] args) throws Exception {
 		Alphabet alpha = new Alphabet();
-		KeyGenerator keyGen = new KeyGenerator();
+		KeyGenerator keyGen = new KeyGenerator(8, 1024);
 		
-		String message = "file1";
 		
 		/*
 		try{
@@ -31,7 +30,7 @@ public class Tester {
 		
 		//alpha.printAlphabet();
 		 */
-
+		//alpha.printAlphabet();
 		System.out.println(keyGen.toString());
 
 	}

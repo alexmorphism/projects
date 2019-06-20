@@ -7,11 +7,14 @@
 
 package application;
 	
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,9 +31,11 @@ import javafx.scene.text.*;
 public class Main extends Application {
 	Stage window;
 	Scene scene1, scene2;
-	
-	private String message = "";
 	private Alphabet alpha = new Alphabet();
+	
+	private FileChooser fileChooser;
+	private File selectedFile;
+	private FileIO reader;
 	
 	// launch the application
 	public static void main(String[] args) {
@@ -44,13 +49,26 @@ public class Main extends Application {
 		Button genKey  	 = new Button("Genereate Key");
 		Button contConvo = new Button("Continue Conversation");
 		
+		fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
+		reader = new FileIO();
+		
+		
+		
+		genKey.setOnAction(e->{
+			KeyGenerator key = new KeyGenerator(256, 1024);
+			System.out.println("Key generated!");
+			System.out.println(key.toString());
+			
+		});
+		
 		contConvo.setOnAction(e->{
 			window.setScene(scene2);
 		});
 		
 		
 		VBox layout1 = new VBox(30); 									
-		layout1.getChildren().addAll(label1,genKey, contConvo);
+		layout1.getChildren().addAll(label1, genKey, contConvo);
 		scene1 = new Scene(layout1, 800, 600);
 		
 		
@@ -60,6 +78,28 @@ public class Main extends Application {
 		Button encrypt 	 = new Button("Encrypt");		 
 		Button decrypt 	 = new Button("Decrypt");
 		Button clear   	 = new Button("Clear");
+		
+		uploadPr.setOnAction(e->{
+			ArrayList<String> keyList = new ArrayList<String>();
+			String nr = "";
+			String dr = "";
+			fileChooser.setTitle("upload private key");
+			selectedFile = fileChooser.showOpenDialog(window);
+			if(selectedFile != null){
+				try {
+					keyList = (ArrayList<String>) reader.readKey(selectedFile);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				
+				for(String s: keyList){
+					System.out.println(s);
+				}
+//				//dr = keyList.get(1);
+//				System.out.println(nr);
+//				System.out.println(dr);
+			}
+		});
 		
 		TextArea box1 = new TextArea();
 		box1.setWrapText(true);
@@ -73,7 +113,6 @@ public class Main extends Application {
 		
 		HBox layout2 = new HBox();
 		layout2.getChildren().addAll(back, uploadPr, uploadPu);
-		//layout2.setPadding(new Insets(5,10,5,10));
 		
 		HBox layout3 = new HBox();
 		layout3.getChildren().addAll(encrypt, decrypt);

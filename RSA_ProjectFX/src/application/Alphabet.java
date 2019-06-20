@@ -39,45 +39,21 @@ public class Alphabet {
 		alphaMap.put(' ', num++);
 		alphaMap.put('?', num++);
 		alphaMap.put('!', num++);
-	}
-	
-	
-	//*******methods for reading files******//
-	public List<String> readLines(String filename)
-	throws Exception
-	{
-		String line = null;
-		List<String> records = new ArrayList();
-		BufferedReader bf = new BufferedReader(new FileReader(filename));
-		
-		// reads line by line until we have an empty line
-		while((line = bf.readLine()) != null){
-			records.add(line); // adds each line to an array list
-		}
-		
-		bf.close(); // close buffered reader
-		//encrypt = new Encryption(records);
-		
-		return records;	
-	}
-	
-	
-	public void writeFile(String message)
-	throws Exception
-	{
-		PrintWriter    pw = new PrintWriter("message.txt");
-		pw.print(message);
-		pw.close();
+		alphaMap.put('.', num++);
 	}
 	
 	
 	// print alphabet to the console
 	public void printAlphabet(){
+		int j = 0;
 		System.out.print("{");
 		for(Character i: alphaMap.keySet()){
 			System.out.print("(" + i);
 			System.out.print("," + alphaMap.get(i) + ")");
 			System.out.print(",");
+			j++;
+			if(j % 10 == 0)
+				System.out.println();
 		}
 		System.out.println("}");
 	}
