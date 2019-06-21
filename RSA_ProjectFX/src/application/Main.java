@@ -1,13 +1,15 @@
 /*
  * GUI of the RSA Encryption project
- * Authors
- * Samuel Gomez and Alexandre Castro
- * Started on June 06 2019 (Summer 19) at UML
+ * 
+ * Authors: Alexandre Castro and Samuel Gomez
+ * Started on June 06 2019 (Summer 19) at University of Massachusetts Lowell
  */
 
 package application;
 	
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +39,16 @@ public class Main extends Application {
 	private File selectedFile;
 	private FileIO reader;
 	
+	// initializes a private key
+	private BigInteger nr = new BigInteger("0");
+	private BigInteger dr = new BigInteger("0");
+	private Key privateKey = new Key(nr, dr);
+	
+	// initializes a public key
+	private BigInteger np = new BigInteger("0");
+	private BigInteger ep = new BigInteger("0");
+	private Key publicKey = new Key(np, ep);
+	
 	// launch the application
 	public static void main(String[] args) {
 		launch(args);
@@ -51,26 +63,23 @@ public class Main extends Application {
 		
 		fileChooser = new FileChooser();
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
+		fileChooser.setTitle("upload your key");
 		reader = new FileIO();
 		
 		
-		
 		genKey.setOnAction(e->{
-			KeyGenerator key = new KeyGenerator(256, 1024);
+			KeyGenerator keyGen = new KeyGenerator(80, 1024);
 			System.out.println("Key generated!");
-			System.out.println(key.toString());
-			
+			System.out.println(keyGen.toString());
 		});
 		
 		contConvo.setOnAction(e->{
 			window.setScene(scene2);
 		});
 		
-		
 		VBox layout1 = new VBox(30); 									
 		layout1.getChildren().addAll(label1, genKey, contConvo);
 		scene1 = new Scene(layout1, 800, 600);
-		
 		
 		Button back      = new Button("Back");
 		Button uploadPr  = new Button("Upload Private");
@@ -79,25 +88,23 @@ public class Main extends Application {
 		Button decrypt 	 = new Button("Decrypt");
 		Button clear   	 = new Button("Clear");
 		
+		// UPLOADS PRIVATE KEY
 		uploadPr.setOnAction(e->{
-			ArrayList<String> keyList = new ArrayList<String>();
-			String nr = "";
-			String dr = "";
-			fileChooser.setTitle("upload private key");
-			selectedFile = fileChooser.showOpenDialog(window);
-			if(selectedFile != null){
-				try {
-					keyList = (ArrayList<String>) reader.readKey(selectedFile);
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				
-				for(String s: keyList){
-					System.out.println(s);
-				}
-//				//dr = keyList.get(1);
-//				System.out.println(nr);
-//				System.out.println(dr);
+			try {
+				uploadKey(privateKey);
+				System.out.println(privateKey.toString());
+			} catch (Exception e1) {
+				System.out.println(e1.getMessage());
+			}
+		});
+		
+		// UPLOADS PUBLIC KEY
+		uploadPu.setOnAction(e->{
+			try{
+				uploadKey(publicKey);
+				System.out.println(publicKey.toString());
+			} catch(Exception e1){
+				System.out.println(e1.getMessage());
 			}
 		});
 		
@@ -121,41 +128,32 @@ public class Main extends Application {
 		layout4.getChildren().addAll(layout2, box1, layout3, box2);
 		
 		
-		
 		scene2 = new Scene(layout4, 800, 600);
-		
 		window.setTitle("RSA Encryption"); 							// sets the title to the scene
 		window.setScene(scene1); 									// add the scene to the stage
 		window.show(); 												// displays the contents of the scene
 	}
+	
+	
+	private void uploadKey(Key thekey) throws Exception
+	{
+		String str1 = "";
+		String str2 = "";
+		List<String> list = new ArrayList<String>();
+		selectedFile = fileChooser.showOpenDialog(window);
+		if(selectedFile != null){
+			try{
+				list = reader.readKey(selectedFile);
+				str1 = list.get(0);
+				str2 = list.get(1);
+				BigInteger x = new BigInteger(str1);
+				BigInteger y = new BigInteger(str2);
+				thekey.setX(x);
+				thekey.setY(y);
+			} catch(FileNotFoundException ex){
+				System.out.println(ex.getMessage());
+			}
+		}
+	}
 
 }
-/*
-
-//encrypt button action
-encrypt.setOnAction(e-> {
-	//message = tArea.getText();
-	List<String> processedText = new ArrayList<String>();
-	try{
-		alpha.writeFile(message);
-		processedText = alpha.readLines("message.txt");
-		//tArea.appendText("\n\nEncrypting message...\n");
-	} catch(Exception ex){
-		System.out.println(ex);
-	}
-	
-	for(String s: processedText)
-		System.out.println(s);
-});
-
-//decrypt button action
-decrypt.setOnAction(e->{
-	
-});
-
-//clear button action
-clear.setOnAction(e->{
-	//tArea.clear();
-	message = "";
-});
-*/

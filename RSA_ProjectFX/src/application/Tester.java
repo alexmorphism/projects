@@ -1,7 +1,7 @@
 /*
- *  This is a tester class to test methods and their behaviors
- *  06/13/19
+ *  The tester class is used to test objects from other classes, their methods and their behaviors
  *  
+ *  06/13/19
  *  Authors: Alexandre Castro and Samuel Gomez
  */
 package application;

@@ -1,6 +1,9 @@
 /*
  *  This is the Alphabet class
- *  It contains Letter objects inside an array list, forming a complete alphabet from A-Z
+ *  It contains letters and numbers implemented on a hash map data structure
+ *  Where the key is a Character and the value is an Integer
+ *  
+ *  
  *  06/13/19
  *  
  *  Authors: Alexandre Castro and Samuel Gomez
@@ -16,7 +19,6 @@ import java.util.HashMap;
 
 public class Alphabet {
 	private HashMap<Character, Integer> alphaMap;
-	
 	
 	
 	// no argument constructor constructs a new alphabet

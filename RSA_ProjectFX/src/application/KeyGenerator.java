@@ -1,3 +1,10 @@
+/*
+ *  This is the KeyGenerator class
+ *  The purpose of this class is to generate a public and a private key pair
+ *  
+ *  06/21/19
+ *  Authors: Alexandre Castro and Samuel Gomez
+ */
 package application;
 
 import java.math.BigInteger;
@@ -65,7 +72,7 @@ public class KeyGenerator {
 		}
 	}
 	
-	//creates an ordered pair (x,y) such that x,y is a BigInteger
+	//creates an ordered pair x y such that x,y is a BigInteger
 	private String orderedPair(BigInteger x, BigInteger y){
 		String pair = x.toString() + " " + y.toString();
 		return pair;
