@@ -23,6 +23,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.Group;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -82,31 +84,15 @@ public class Main extends Application {
 		layout1.getChildren().addAll(label1, genKey, contConvo);
 		scene1 = new Scene(layout1, 800, 600);
 		
-		Button back      = new Button("Back");
-		Button uploadPr  = new Button("Upload Private");
-		Button uploadPu  = new Button("Upload Public");
-		Button encrypt 	 = new Button("Encrypt");		 
-		Button decrypt 	 = new Button("Decrypt");
-		Button clear   	 = new Button("Clear");
+		Button back        = new Button("Back");
+		Button uploadText  = new Button("Upload Text");
+		Button encode 	   = new Button("Encode");		 
+		Button decode 	   = new Button("Decode");
+		Button saveFile    = new Button("Save txt file");
 		
-		// UPLOADS PRIVATE KEY
-		uploadPr.setOnAction(e->{
-			try {
-				uploadKey(privateKey);
-				System.out.println(privateKey.toString());
-			} catch (Exception e1) {
-				System.out.println(e1.getMessage());
-			}
-		});
-		
-		// UPLOADS PUBLIC KEY
-		uploadPu.setOnAction(e->{
-			try{
-				uploadKey(publicKey);
-				System.out.println(publicKey.toString());
-			} catch(Exception e1){
-				System.out.println(e1.getMessage());
-			}
+		// UPLOADS TEXT
+		uploadText.setOnAction(e->{
+			
 		});
 		
 
@@ -121,23 +107,34 @@ public class Main extends Application {
 			window.setScene(scene1);
 		});
 		
-		// ENCRYPT the message
-		encrypt.setOnAction(e->{
-			//encrypt do something
+		// ENCODE the message
+		encode.setOnAction(e->{
 			
 		});
 		
-		HBox layout2 = new HBox();
-		layout2.getChildren().addAll(back, uploadPr, uploadPu);
+		// DECODE the message
+		decode.setOnAction(e->{
+			
+		});
+		BorderPane border = new BorderPane();
+		scene2 = new Scene(border, 800, 600);
+		HBox top = new HBox();
+		top.getChildren().addAll(back, uploadText);
+		border.setTop(top);
 		
-		HBox layout3 = new HBox();
-		layout3.getChildren().addAll(encrypt, decrypt);
+		VBox center = new VBox(10);
+		center.getChildren().addAll(box1, box2);
+		border.setCenter(center);
 		
-		VBox layout4 = new VBox(20);
-		layout4.getChildren().addAll(layout2, box1, layout3, box2);
+		VBox right = new VBox();
+		right.getChildren().addAll(encode, decode);
+		border.setRight(right);
+		
+		HBox bot = new HBox();
+		bot.getChildren().addAll(saveFile);
+		border.setBottom(bot);
 		
 		
-		scene2 = new Scene(layout4, 800, 600);
 		window.setTitle("RSA Encryption"); 							// sets the title to the scene
 		window.setScene(scene1); 									// add the scene to the stage
 		window.show(); 												// displays the contents of the scene

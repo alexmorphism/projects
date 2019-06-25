@@ -30,8 +30,8 @@ public class KeyGenerator {
 			q = q.nextProbablePrime(); //returns the next Big Integer that is probably prime
 		n = p.multiply(q);
 		d = E.modInverse(p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE))); // d = e^-1 mod (p-1)(q-1)
-		createPublicPair();
-		createPrivatePair();
+		//createPublicPair();
+		//createPrivatePair();
 	}
 	
 	
