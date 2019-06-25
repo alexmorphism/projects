@@ -39,15 +39,16 @@ public class Main extends Application {
 	private File selectedFile;
 	private FileIO reader;
 	
+	// initializes a public key
+	private BigInteger np = new BigInteger("0");
+	private BigInteger ep = new BigInteger("0");
+	private Key publicKey = new Key(np, ep);
+	
 	// initializes a private key
 	private BigInteger nr = new BigInteger("0");
 	private BigInteger dr = new BigInteger("0");
 	private Key privateKey = new Key(nr, dr);
 	
-	// initializes a public key
-	private BigInteger np = new BigInteger("0");
-	private BigInteger ep = new BigInteger("0");
-	private Key publicKey = new Key(np, ep);
 	
 	// launch the application
 	public static void main(String[] args) {
@@ -68,9 +69,9 @@ public class Main extends Application {
 		
 		
 		genKey.setOnAction(e->{
-			KeyGenerator keyGen = new KeyGenerator(80, 1024);
+			KeyGenerator keyGen = new KeyGenerator(16, 1024);
 			System.out.println("Key generated!");
-			System.out.println(keyGen.toString());
+			//System.out.println(keyGen.toString());
 		});
 		
 		contConvo.setOnAction(e->{
@@ -108,6 +109,8 @@ public class Main extends Application {
 			}
 		});
 		
+
+		
 		TextArea box1 = new TextArea();
 		box1.setWrapText(true);
 		
@@ -116,6 +119,12 @@ public class Main extends Application {
 		
 		back.setOnAction(e->{ 
 			window.setScene(scene1);
+		});
+		
+		// ENCRYPT the message
+		encrypt.setOnAction(e->{
+			//encrypt do something
+			
 		});
 		
 		HBox layout2 = new HBox();
@@ -154,6 +163,11 @@ public class Main extends Application {
 				System.out.println(ex.getMessage());
 			}
 		}
+	}
+	
+	private String getMessage(TextArea textarea){
+		String message = textarea.getText();
+		return message;
 	}
 
 }

@@ -44,6 +44,11 @@ public class Alphabet {
 		alphaMap.put('.', num++);
 	}
 	
+
+	public int getValue(Character c){
+		int val = alphaMap.get(c);
+		return val;
+	}
 	
 	// print alphabet to the console
 	public void printAlphabet(){
